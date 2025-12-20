@@ -94,3 +94,7 @@ process.on("SIGTERM", () => {
   process.exit(0);
 });
 
+// ... your other routes ...
+
+// Error handler must be LAST
+app.use(errorHandler);
