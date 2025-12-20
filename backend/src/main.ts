@@ -3,6 +3,7 @@ import cors from 'cors';
 import { requestLogger } from './middleware/request-logger';
 import { errorHandler } from './middleware/error-handler';
 import authRoutes from './routes/auth';
+import { authMiddleware } from './middleware/auth';
 
 const app = express();
 const PORT = 3000;
@@ -11,6 +12,7 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
+app.use('/api/protected', authMiddleware);
 
 // Routes
 app.use('/api/auth', authRoutes);
