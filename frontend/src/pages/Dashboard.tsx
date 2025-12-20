@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Dashboard.css'; // added import
 
 interface DashboardStats {
   totalVMs: number;
@@ -38,47 +39,54 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="dashboard-container">
       {/* Header */}
-      <div style={styles.header}>
-        <h1 style={styles.title}>VirBox Dashboard</h1>
-        <button onClick={handleLogout} style={styles.logoutBtn}>
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">VirBox Dashboard</h1>
+        <button onClick={handleLogout} className="logout-btn">
           Logout
         </button>
       </div>
 
       {/* Stats Grid */}
-      <div style={styles.statsGrid}>
-        <div style={styles.statCard}>
+      <div className="stats-grid">
+        <div className="stat-card">
           <h3>Total VMs</h3>
-          <p style={styles.statNumber}>{stats.totalVMs}</p>
+          <p className="stat-number">{stats.totalVMs}</p>
         </div>
-        <div style={styles.statCard}>
+        <div className="stat-card">
           <h3>Active VMs</h3>
-          <p style={styles.statNumber}>{stats.activeVMs}</p>
+          <p className="stat-number">{stats.activeVMs}</p>
         </div>
-        <div style={styles.statCard}>
+        <div className="stat-card">
           <h3>CPU Usage</h3>
-          <div style={styles.progressBar}>
-            <div style={{ ...styles.progress, width: `${stats.cpuUsage}%` }}></div>
+          <div className="progress-bar">
+            <div
+              className="progress-fill"
+              style={{ '--progress': `${stats.cpuUsage}%` } as React.CSSProperties}
+              data-value={stats.cpuUsage}
+            ></div>
           </div>
           <p>{stats.cpuUsage}%</p>
         </div>
-        <div style={styles.statCard}>
+        <div className="stat-card">
           <h3>Memory Usage</h3>
-          <div style={styles.progressBar}>
-            <div style={{ ...styles.progress, width: `${stats.memoryUsage}%` }}></div>
+          <div className="progress-bar">
+            <div
+              className="progress-fill"
+              style={{ ['--progress' as any]: `${stats.memoryUsage}%` }}
+            ></div>
           </div>
           <p>{stats.memoryUsage}%</p>
         </div>
       </div>
 
       {/* Carousel - VMs */}
-      <div style={styles.carouselSection}>
+      <div className="carousel-section">
         <h2>Virtual Machines</h2>
-        <div style={styles.carousel}>
+        <div className="carousel">
           <button
-            style={styles.carouselBtn}
+            className="carousel-btn"
             onClick={() =>
               setCurrentIndex(
                 currentIndex === 0 ? vms.length - 1 : currentIndex - 1
@@ -88,24 +96,12 @@ const Dashboard: React.FC = () => {
             ←
           </button>
 
-          <div style={styles.carouselContent}>
-            <div
-              style={{
-                ...styles.vmCard,
-                animation: 'fadeIn 0.5s',
-              }}
-            >
+          <div className="carousel-content">
+            <div className="vm-card fade-in">
               <h3>{vms[currentIndex].name}</h3>
               <p>
                 <strong>Status:</strong>{' '}
-                <span
-                  style={{
-                    color:
-                      vms[currentIndex].status === 'Running'
-                        ? '#00ff00'
-                        : '#ff0000',
-                  }}
-                >
+                <span className={`status ${vms[currentIndex].status === 'Running' ? 'running' : 'stopped'}`}>
                   {vms[currentIndex].status}
                 </span>
               </p>
@@ -115,12 +111,12 @@ const Dashboard: React.FC = () => {
               <p>
                 <strong>Memory:</strong> {vms[currentIndex].memory}%
               </p>
-              <button style={styles.actionBtn}>Manage</button>
+              <button className="action-btn">Manage</button>
             </div>
           </div>
 
           <button
-            style={styles.carouselBtn}
+            className="carousel-btn"
             onClick={() =>
               setCurrentIndex((currentIndex + 1) % vms.length)
             }
@@ -128,15 +124,15 @@ const Dashboard: React.FC = () => {
             →
           </button>
         </div>
-        <p style={styles.carouselIndicator}>
+        <p className="carousel-indicator">
           {currentIndex + 1} / {vms.length}
         </p>
       </div>
 
       {/* VM List */}
-      <div style={styles.vmList}>
+      <div className="vm-list">
         <h2>All Virtual Machines</h2>
-        <table style={styles.table}>
+        <table className="table">
           <thead>
             <tr>
               <th>Name</th>
@@ -151,170 +147,23 @@ const Dashboard: React.FC = () => {
               <tr key={vm.id}>
                 <td>{vm.name}</td>
                 <td>
-                  <span
-                    style={{
-                      color:
-                        vm.status === 'Running' ? '#00ff00' : '#ff0000',
-                    }}
-                  >
+                  <span className={`status ${vm.status === 'Running' ? 'running' : 'stopped'}`}>
                     {vm.status}
                   </span>
                 </td>
                 <td>{vm.cpu}%</td>
                 <td>{vm.memory}%</td>
                 <td>
-                  <button style={styles.editBtn}>Edit</button>
+                  <button className="edit-btn">Edit</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-      `}</style>
+      {/* style tag removed - moved to CSS file */}
     </div>
   );
-};
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    minHeight: '100vh',
-    background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
-    color: '#fff',
-    padding: '20px',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '30px',
-    paddingBottom: '20px',
-    borderBottom: '2px solid rgba(0, 255, 150, 0.3)',
-  },
-  title: {
-    fontSize: '32px',
-    margin: 0,
-    background: 'linear-gradient(90deg, #00ff9a, #00d4ff)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-  logoutBtn: {
-    padding: '10px 20px',
-    background: '#ff0055',
-    border: 'none',
-    borderRadius: '6px',
-    color: '#fff',
-    cursor: 'pointer',
-    fontSize: '14px',
-    fontWeight: '600',
-  },
-  statsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '20px',
-    marginBottom: '30px',
-  },
-  statCard: {
-    background: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(0, 255, 150, 0.2)',
-    borderRadius: '12px',
-    padding: '20px',
-    backdropFilter: 'blur(10px)',
-  },
-  statNumber: {
-    fontSize: '36px',
-    fontWeight: 'bold',
-    margin: '10px 0',
-    color: '#00ff9a',
-  },
-  progressBar: {
-    width: '100%',
-    height: '8px',
-    background: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: '4px',
-    overflow: 'hidden',
-    marginBottom: '10px',
-  },
-  progress: {
-    height: '100%',
-    background: 'linear-gradient(90deg, #00ff9a, #00d4ff)',
-    transition: 'width 0.3s ease',
-  },
-  carouselSection: {
-    marginBottom: '30px',
-  },
-  carousel: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px',
-    marginTop: '15px',
-  },
-  carouselBtn: {
-    background: 'rgba(0, 255, 150, 0.2)',
-    border: '1px solid rgba(0, 255, 150, 0.5)',
-    color: '#00ff9a',
-    width: '50px',
-    height: '50px',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontSize: '20px',
-    fontWeight: 'bold',
-  },
-  carouselContent: {
-    flex: 1,
-    minHeight: '200px',
-  },
-  vmCard: {
-    background: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(0, 255, 150, 0.2)',
-    borderRadius: '12px',
-    padding: '20px',
-    backdropFilter: 'blur(10px)',
-  },
-  actionBtn: {
-    marginTop: '15px',
-    padding: '10px 20px',
-    background: 'linear-gradient(90deg, #00ff9a, #00d4ff)',
-    border: 'none',
-    borderRadius: '6px',
-    color: '#000',
-    fontWeight: '600',
-    cursor: 'pointer',
-  },
-  carouselIndicator: {
-    textAlign: 'center',
-    marginTop: '10px',
-    color: '#00ff9a',
-    fontSize: '14px',
-  },
-  vmList: {
-    background: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(0, 255, 150, 0.2)',
-    borderRadius: '12px',
-    padding: '20px',
-    backdropFilter: 'blur(10px)',
-    overflowX: 'auto',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-    marginTop: '15px',
-  },
-  editBtn: {
-    padding: '6px 12px',
-    background: 'rgba(0, 255, 150, 0.2)',
-    border: '1px solid rgba(0, 255, 150, 0.5)',
-    color: '#00ff9a',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '12px',
-  },
 };
 
 export default Dashboard;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Register.css';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -50,11 +51,11 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
+    <div className="register-container">
       <h1>Register</h1>
-      {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+      {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '15px' }}>
+        <div className="form-group">
           <label>Name:</label>
           <input
             type="text"
@@ -62,10 +63,11 @@ const Register: React.FC = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px', boxSizing: 'border-box' }}
+            className="form-input"
+            placeholder="Enter your full name"
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
+        <div className="form-group">
           <label>Email:</label>
           <input
             type="email"
@@ -73,10 +75,11 @@ const Register: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px', boxSizing: 'border-box' }}
+            className="form-input"
+            placeholder="Enter your email address"
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
+        <div className="form-group">
           <label>Password:</label>
           <input
             type="password"
@@ -84,10 +87,11 @@ const Register: React.FC = () => {
             value={formData.password}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px', boxSizing: 'border-box' }}
+            placeholder="Enter your password"
+            className="form-input"
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
+        <div className="form-group">
           <label>Confirm Password:</label>
           <input
             type="password"
@@ -95,14 +99,15 @@ const Register: React.FC = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px', boxSizing: 'border-box' }}
+            placeholder="Confirm your password"
+            className="form-input"
           />
         </div>
-        <button type="submit" disabled={loading} style={{ width: '100%', padding: '10px', cursor: 'pointer' }}>
+        <button type="submit" disabled={loading} className="submit-button">
           {loading ? 'Registering...' : 'Register'}
         </button>
       </form>
-      <p style={{ textAlign: 'center', marginTop: '15px' }}>
+      <p className="login-link">
         Already have an account? <a href="/login">Login</a>
       </p>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -38,35 +39,37 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
+    <div className="login-container">
       <h1>Login</h1>
-      {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+      {error && <div className="login-error">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '15px' }}>
+        <div className="login-form-group">
           <label>Email:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px', boxSizing: 'border-box' }}
+            className="login-input"
+            placeholder="Enter your email"
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
+        <div className="login-form-group">
           <label>Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px', boxSizing: 'border-box' }}
+            className="login-input"
+            placeholder="Enter your password"
           />
         </div>
-        <button type="submit" disabled={loading} style={{ width: '100%', padding: '10px', cursor: 'pointer' }}>
+        <button type="submit" disabled={loading} className="login-button">
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      <p style={{ textAlign: 'center', marginTop: '15px' }}>
+      <p className="login-footer">
         Don't have an account? <a href="/register">Register</a>
       </p>
     </div>
