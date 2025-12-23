@@ -49,7 +49,8 @@ const App: React.FC = () => {
             </ProtectedRoute>
           }
         />
-
+        <Route path="/" element={<LandingPage />} />
+        
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
