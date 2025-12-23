@@ -1,15 +1,164 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./LandingPage.css";
+
+// Trending video data - 2025 UK/USA viral content
+const trendingVideos = [
+  {
+    id: 1,
+    title: "GRWM: London Fashion Week",
+    category: "Fashion",
+    platform: "TikTok",
+    views: "4.2M",
+    thumbnail: "/assets/IMG_3778.jpg",
+    creator: "@fashionmaven",
+    duration: "0:45"
+  },
+  {
+    id: 2,
+    title: "Must-Have Travel Gadgets 2025",
+    category: "Gadgets",
+    platform: "YouTube",
+    views: "2.8M",
+    thumbnail: "/assets/Landing-P4.jpg",
+    creator: "@techtravel",
+    duration: "0:58"
+  },
+  {
+    id: 3,
+    title: "Viral Glow Skin Routine",
+    category: "Beauty",
+    platform: "Instagram",
+    views: "6.1M",
+    thumbnail: "/assets/Landing-P2.jpg",
+    creator: "@glowqueen",
+    duration: "0:32"
+  },
+  {
+    id: 4,
+    title: "NYC Street Food Challenge",
+    category: "Food",
+    platform: "TikTok",
+    views: "3.5M",
+    thumbnail: "/assets/IMG_3776.jpg",
+    creator: "@foodiefinds",
+    duration: "0:48"
+  },
+  {
+    id: 5,
+    title: "Hidden Gems in Santorini",
+    category: "Travel",
+    platform: "Instagram",
+    views: "5.2M",
+    thumbnail: "/assets/IMG_3775.jpg",
+    creator: "@wanderlust",
+    duration: "0:55"
+  },
+  {
+    id: 6,
+    title: "Fall 2025 Outfit Ideas",
+    category: "Fashion",
+    platform: "TikTok",
+    views: "7.8M",
+    thumbnail: "/assets/IMG_3779.jpg",
+    creator: "@stylehard",
+    duration: "0:42"
+  },
+  {
+    id: 7,
+    title: "AI Beauty Tools Review",
+    category: "Beauty",
+    platform: "YouTube",
+    views: "1.9M",
+    thumbnail: "/assets/Landing-P3.jpg",
+    creator: "@beautytech",
+    duration: "0:38"
+  },
+  {
+    id: 8,
+    title: "Tokyo Ramen Tour",
+    category: "Food",
+    platform: "TikTok",
+    views: "4.7M",
+    thumbnail: "/assets/IMG_3777.jpg",
+    creator: "@keithlee",
+    duration: "0:52"
+  },
+  {
+    id: 9,
+    title: "Smart Packing Hacks",
+    category: "Travel",
+    platform: "Instagram",
+    views: "3.1M",
+    thumbnail: "/assets/Landing-P4.jpg",
+    creator: "@packlight",
+    duration: "0:35"
+  },
+  {
+    id: 10,
+    title: "Unboxing: Viral Tech 2025",
+    category: "Gadgets",
+    platform: "YouTube",
+    views: "2.4M",
+    thumbnail: "/assets/Landing-P2.jpg",
+    creator: "@unboxtherapy",
+    duration: "0:59"
+  }
+];
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const categories = ["All", "Fashion", "Beauty", "Gadgets", "Food", "Travel"];
+
+  const filteredVideos = activeCategory === "All" 
+    ? trendingVideos 
+    : trendingVideos.filter(v => v.category === activeCategory);
+
+  const scrollCarousel = (direction: "left" | "right") => {
+    if (carouselRef.current) {
+      const scrollAmount = 340;
+      carouselRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth"
+      });
+    }
+  };
+
+  const getPlatformIcon = (platform: string) => {
+    switch (platform) {
+      case "TikTok":
+        return (
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+          </svg>
+        );
+      case "Instagram":
+        return (
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+          </svg>
+        );
+      case "YouTube":
+        return (
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+            <path fill="white" d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div className="vb">
-      {/* Navigation - Apple Style */}
+    <div className="vb light">
+      {/* Navigation */}
       <nav className="vb-nav">
         <div className="vb-nav-inner">
           <Link to="/" className="vb-logo">
@@ -19,10 +168,10 @@ const LandingPage = () => {
 
           <div className={`vb-nav-menu ${mobileMenuOpen ? "open" : ""}`}>
             <Link to="/#platform">Platform</Link>
+            <Link to="/#trending">Trending</Link>
             <Link to="/#features">Features</Link>
             <Link to="/#pricing">Pricing</Link>
             <Link to="/#enterprise">Enterprise</Link>
-            <Link to="/#resources">Resources</Link>
           </div>
 
           <div className="vb-nav-actions">
@@ -30,7 +179,7 @@ const LandingPage = () => {
               Sign in
             </button>
             <button className="vb-btn-primary" onClick={() => navigate("/register")}>
-              Get Started
+              Start Free
             </button>
           </div>
 
@@ -45,236 +194,316 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      {/* Hero - Apple "Marketing Moment" */}
+      {/* Hero */}
       <section className="vb-hero">
-        <div className="vb-hero-content">
-          <p className="vb-hero-eyebrow">AI Content Platform</p>
-          <h1 className="vb-hero-title">
-            Unlock Your
-            <br />
-            <span>Virtual Potential</span>
-          </h1>
-          <p className="vb-hero-subtitle">
-            Create viral content across every platform. Powered by AI agents
-            that understand your brand.
-          </p>
-          <div className="vb-hero-cta">
-            <button className="vb-btn-primary vb-btn-lg" onClick={() => navigate("/register")}>
-              Start Free Trial
-            </button>
-            <button className="vb-btn-secondary vb-btn-lg">
-              Watch Demo
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polygon points="5,3 19,12 5,21" />
-              </svg>
-            </button>
-          </div>
-          <p className="vb-hero-note">No credit card required</p>
+        <div className="vb-hero-badge">
+          <span className="vb-badge-dot"></span>
+          Trusted by 10,000+ creators
         </div>
+        <h1 className="vb-hero-title">
+          Create viral content
+          <br />
+          <span>in seconds</span>
+        </h1>
+        <p className="vb-hero-subtitle">
+          AI-powered platform that helps you create, schedule, and analyze 
+          short-form videos for TikTok, Instagram, and YouTube.
+        </p>
+        <div className="vb-hero-cta">
+          <div className="vb-hero-input-group">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button className="vb-btn-primary">Get Started Free</button>
+          </div>
+        </div>
+        <p className="vb-hero-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22,4 12,14.01 9,11.01"/>
+          </svg>
+          No credit card required · 14-day free trial
+        </p>
 
         <div className="vb-hero-visual">
-          <div className="vb-hero-image-container">
-            <img src="/assets/IMG_3775.jpg" alt="VIRLBOX Platform" className="vb-hero-img" />
-            <div className="vb-hero-glow"></div>
-          </div>
+          <img src="/assets/IMG_3775.jpg" alt="VIRLBOX Platform" />
         </div>
       </section>
 
-      {/* Social Proof Bar */}
-      <section className="vb-proof">
-        <div className="vb-proof-inner">
-          <p>Trusted by 10,000+ creators and brands worldwide</p>
-          <div className="vb-proof-logos">
-            <span>TikTok</span>
-            <span>Instagram</span>
-            <span>YouTube</span>
-            <span>Twitter</span>
-            <span>LinkedIn</span>
-          </div>
+      {/* Logos */}
+      <section className="vb-logos">
+        <p>Powering content on</p>
+        <div className="vb-logos-grid">
+          <span>TikTok</span>
+          <span>Instagram</span>
+          <span>YouTube</span>
+          <span>Twitter</span>
+          <span>LinkedIn</span>
         </div>
       </section>
 
-      {/* Platform Overview - Big Visual Moment */}
-      <section className="vb-section vb-platform" id="platform">
+      {/* Trending Videos Carousel */}
+      <section className="vb-section vb-trending" id="trending">
         <div className="vb-section-header">
-          <p className="vb-label">Platform</p>
-          <h2>One dashboard.<br />Every platform.</h2>
+          <span className="vb-label">Trending Now</span>
+          <h2>What's going viral in 2025</h2>
           <p className="vb-section-desc">
-            Manage content, track analytics, and schedule posts across
-            all your social accounts from a single, intuitive interface.
+            Explore the top-performing short videos across fashion, beauty, gadgets, food, and travel.
+            Create similar content with VIRLBOX in minutes.
           </p>
         </div>
 
-        <div className="vb-card vb-card-hero">
+        {/* Category Tabs */}
+        <div className="vb-tabs">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              className={`vb-tab ${activeCategory === cat ? "active" : ""}`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Video Carousel */}
+        <div className="vb-carousel-wrapper">
+          <button 
+            className="vb-carousel-btn vb-carousel-btn-left"
+            onClick={() => scrollCarousel("left")}
+            aria-label="Scroll left"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="15,18 9,12 15,6"/>
+            </svg>
+          </button>
+
+          <div className="vb-carousel" ref={carouselRef}>
+            {filteredVideos.map((video) => (
+              <div key={video.id} className="vb-video-card">
+                <div className="vb-video-thumbnail">
+                  <img src={video.thumbnail} alt={video.title} />
+                  <div className="vb-video-overlay">
+                    <button className="vb-play-btn">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5,3 19,12 5,21"/>
+                      </svg>
+                    </button>
+                  </div>
+                  <span className="vb-video-duration">{video.duration}</span>
+                  <div className="vb-video-platform">
+                    {getPlatformIcon(video.platform)}
+                    <span>{video.platform}</span>
+                  </div>
+                </div>
+                <div className="vb-video-info">
+                  <span className="vb-video-category">{video.category}</span>
+                  <h3>{video.title}</h3>
+                  <div className="vb-video-meta">
+                    <span className="vb-video-creator">{video.creator}</span>
+                    <span className="vb-video-views">{video.views} views</span>
+                  </div>
+                </div>
+                <button className="vb-btn-outline vb-btn-sm">
+                  Create Similar
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <button 
+            className="vb-carousel-btn vb-carousel-btn-right"
+            onClick={() => scrollCarousel("right")}
+            aria-label="Scroll right"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </button>
+        </div>
+
+        <div className="vb-trending-cta">
+          <button className="vb-btn-primary vb-btn-lg">
+            Start Creating Viral Content
+          </button>
+        </div>
+      </section>
+
+      {/* Platform Preview */}
+      <section className="vb-section vb-platform" id="platform">
+        <div className="vb-section-header">
+          <span className="vb-label">Platform</span>
+          <h2>Your creative command center</h2>
+          <p className="vb-section-desc">
+            Manage all your content from one beautiful dashboard. 
+            Schedule, analyze, and optimize across every platform.
+          </p>
+        </div>
+
+        <div className="vb-card vb-card-showcase">
           <img src="/assets/Landing-P3.jpg" alt="Dashboard Preview" />
         </div>
       </section>
 
-      {/* Features - Uniform Grid */}
+      {/* Features Grid */}
       <section className="vb-section vb-features" id="features">
         <div className="vb-section-header">
-          <p className="vb-label">Features</p>
-          <h2>Everything you need<br />to go viral</h2>
+          <span className="vb-label">Features</span>
+          <h2>Everything you need to go viral</h2>
         </div>
 
         <div className="vb-grid vb-grid-3">
           <div className="vb-card">
             <div className="vb-card-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/>
                 <line x1="10" y1="22" x2="14" y2="22"/>
               </svg>
             </div>
-            <h3>AI Assistant</h3>
-            <p>Generate scroll-stopping content ideas, captions, and hashtags tailored to each platform.</p>
+            <h3>AI Content Generator</h3>
+            <p>Generate scroll-stopping scripts, captions, and hashtags tailored to each platform's algorithm.</p>
           </div>
 
           <div className="vb-card">
             <div className="vb-card-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <polygon points="23,7 16,12 23,17"/>
                 <rect x="1" y="5" width="15" height="14" rx="2"/>
               </svg>
             </div>
-            <h3>Video Generation</h3>
-            <p>Create professional videos in 60 seconds with AI-powered editing and trending templates.</p>
+            <h3>Video Editor</h3>
+            <p>Edit videos in seconds with AI-powered tools. Add trending sounds, effects, and transitions.</p>
           </div>
 
           <div className="vb-card">
             <div className="vb-card-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <line x1="18" y1="20" x2="18" y2="10"/>
                 <line x1="12" y1="20" x2="12" y2="4"/>
                 <line x1="6" y1="20" x2="6" y2="14"/>
               </svg>
             </div>
-            <h3>Analytics</h3>
-            <p>Track performance across all platforms with real-time insights and predictive analytics.</p>
+            <h3>Analytics Dashboard</h3>
+            <p>Track performance with real-time insights. See what's working and optimize your strategy.</p>
           </div>
 
           <div className="vb-card">
             <div className="vb-card-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <rect x="3" y="4" width="18" height="18" rx="2"/>
                 <line x1="16" y1="2" x2="16" y2="6"/>
                 <line x1="8" y1="2" x2="8" y2="6"/>
                 <line x1="3" y1="10" x2="21" y2="10"/>
               </svg>
             </div>
-            <h3>Smart Scheduling</h3>
-            <p>AI determines the perfect posting time for maximum engagement on each platform.</p>
+            <h3>Smart Scheduler</h3>
+            <p>AI finds the best posting times for maximum reach. Schedule weeks of content in minutes.</p>
           </div>
 
           <div className="vb-card">
             <div className="vb-card-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
               </svg>
             </div>
-            <h3>Trending Topics</h3>
-            <p>Stay ahead with real-time trend detection and content recommendations.</p>
+            <h3>Trend Detection</h3>
+            <p>Stay ahead with real-time trend alerts. Never miss a viral moment in your niche.</p>
           </div>
 
           <div className="vb-card">
             <div className="vb-card-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
               </svg>
             </div>
-            <h3>Team Collaboration</h3>
-            <p>Work together seamlessly with roles, approvals, and shared content libraries.</p>
+            <h3>Auto-Repurpose</h3>
+            <p>Turn one video into content for every platform. Automatic resizing and reformatting.</p>
           </div>
         </div>
       </section>
 
-      {/* Showcase Split - Apple Style */}
+      {/* Showcase */}
       <section className="vb-section vb-showcase">
         <div className="vb-showcase-grid">
           <div className="vb-showcase-content">
-            <p className="vb-label">Create</p>
-            <h2>Viral videos in<br />60 seconds</h2>
-            <p className="vb-showcase-desc">
-              Describe your vision in plain language. Our AI transforms your ideas
-              into platform-optimized videos, complete with captions, music, and effects.
-            </p>
-            <ul className="vb-showcase-list">
+            <span className="vb-label">How It Works</span>
+            <h2>From idea to viral in 3 steps</h2>
+            <ul className="vb-steps">
               <li>
-                <span className="vb-list-num">01</span>
+                <span className="vb-step-num">01</span>
                 <div>
                   <strong>Describe your vision</strong>
-                  <p>Tell our AI what you want to create</p>
+                  <p>Tell our AI what you want to create in plain language</p>
                 </div>
               </li>
               <li>
-                <span className="vb-list-num">02</span>
+                <span className="vb-step-num">02</span>
                 <div>
                   <strong>AI generates content</strong>
-                  <p>Watch as our agents create videos, images, and copy</p>
+                  <p>Watch as our agents create videos, images, and captions</p>
                 </div>
               </li>
               <li>
-                <span className="vb-list-num">03</span>
+                <span className="vb-step-num">03</span>
                 <div>
                   <strong>Publish everywhere</strong>
-                  <p>Schedule across all platforms with one click</p>
+                  <p>Schedule across TikTok, Instagram, and YouTube instantly</p>
                 </div>
               </li>
             </ul>
             <button className="vb-btn-primary vb-btn-lg">Try It Free</button>
           </div>
           <div className="vb-showcase-visual">
-            <div className="vb-card vb-card-visual">
-              <img src="/assets/Landing-P4.jpg" alt="Mobile App Preview" />
+            <div className="vb-card vb-card-showcase">
+              <img src="/assets/Landing-P4.jpg" alt="Mobile App" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Feature Grid with Images */}
+      {/* Bento Grid */}
       <section className="vb-section vb-bento">
-        <div className="vb-section-header">
-          <p className="vb-label">Capabilities</p>
-          <h2>Built for modern creators</h2>
-        </div>
-
         <div className="vb-bento-grid">
-          <div className="vb-card vb-card-lg">
+          <div className="vb-card vb-card-bento vb-card-lg">
             <img src="/assets/Landing-P2.jpg" alt="AI Features" />
-            <div className="vb-card-overlay">
-              <h3>AI-Powered Tools</h3>
-              <p>From content ideation to automated workflows</p>
+            <div className="vb-card-content">
+              <span className="vb-label">AI Powered</span>
+              <h3>Tools that understand trends</h3>
+              <p>Our AI analyzes millions of viral videos to help you create content that resonates.</p>
             </div>
           </div>
 
-          <div className="vb-card vb-card-md">
-            <img src="/assets/IMG_3776.jpg" alt="VIRLBOX Story" />
-            <div className="vb-card-overlay">
-              <h3>Unleash Creativity</h3>
-              <p>Your digital universe awaits</p>
+          <div className="vb-card vb-card-bento">
+            <img src="/assets/IMG_3776.jpg" alt="Creative Tools" />
+            <div className="vb-card-content">
+              <h3>Unleash creativity</h3>
+              <p>Professional editing tools made simple</p>
             </div>
           </div>
 
-          <div className="vb-card vb-card-md">
-            <img src="/assets/IMG_3778.jpg" alt="Connect Create Innovate" />
-            <div className="vb-card-overlay">
-              <h3>Connect. Create. Innovate.</h3>
-              <p>All-in-one platform</p>
+          <div className="vb-card vb-card-bento">
+            <img src="/assets/IMG_3778.jpg" alt="Multi-platform" />
+            <div className="vb-card-content">
+              <h3>Every platform</h3>
+              <p>TikTok, Reels, Shorts, and more</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing - Clean Cards */}
+      {/* Pricing */}
       <section className="vb-section vb-pricing" id="pricing">
         <div className="vb-section-header">
-          <p className="vb-label">Pricing</p>
-          <h2>Simple, transparent pricing</h2>
-          <p className="vb-section-desc">
-            Start free. Scale as you grow. No hidden fees.
-          </p>
+          <span className="vb-label">Pricing</span>
+          <h2>Start free, scale as you grow</h2>
+          <p className="vb-section-desc">No hidden fees. Cancel anytime.</p>
         </div>
 
         <div className="vb-grid vb-grid-3 vb-pricing-grid">
@@ -285,19 +514,19 @@ const LandingPage = () => {
                 <span className="vb-price-amount">$0</span>
                 <span className="vb-price-period">/month</span>
               </div>
-              <p>Perfect for getting started</p>
+              <p>For getting started</p>
             </div>
-            <ul className="vb-pricing-features">
+            <ul className="vb-pricing-list">
               <li>10 AI generations/month</li>
               <li>1 social account</li>
               <li>Basic analytics</li>
               <li>Community support</li>
             </ul>
-            <button className="vb-btn-secondary vb-btn-full">Get Started</button>
+            <button className="vb-btn-outline vb-btn-full">Get Started</button>
           </div>
 
           <div className="vb-card vb-pricing-card vb-pricing-featured">
-            <div className="vb-pricing-badge">Most Popular</div>
+            <div className="vb-pricing-badge">Popular</div>
             <div className="vb-pricing-header">
               <h3>Pro</h3>
               <div className="vb-price">
@@ -306,7 +535,7 @@ const LandingPage = () => {
               </div>
               <p>For serious creators</p>
             </div>
-            <ul className="vb-pricing-features">
+            <ul className="vb-pricing-list">
               <li>Unlimited AI generations</li>
               <li>10 social accounts</li>
               <li>Advanced analytics</li>
@@ -324,9 +553,9 @@ const LandingPage = () => {
                 <span className="vb-price-amount">$99</span>
                 <span className="vb-price-period">/month</span>
               </div>
-              <p>For teams and agencies</p>
+              <p>For teams & agencies</p>
             </div>
-            <ul className="vb-pricing-features">
+            <ul className="vb-pricing-list">
               <li>Everything in Pro</li>
               <li>Unlimited accounts</li>
               <li>White-label reports</li>
@@ -334,46 +563,48 @@ const LandingPage = () => {
               <li>Dedicated manager</li>
               <li>Custom integrations</li>
             </ul>
-            <button className="vb-btn-secondary vb-btn-full">Contact Sales</button>
+            <button className="vb-btn-outline vb-btn-full">Contact Sales</button>
           </div>
         </div>
       </section>
 
-      {/* CTA - Full Bleed */}
+      {/* CTA */}
       <section className="vb-cta">
-        <div className="vb-cta-bg">
-          <img src="/assets/IMG_3779.jpg" alt="VIRLBOX AI" />
-          <div className="vb-cta-overlay"></div>
-        </div>
-        <div className="vb-cta-content">
-          <h2>Ready to transform your content?</h2>
-          <p>Join thousands of creators already using VIRLBOX</p>
+        <div className="vb-cta-inner">
+          <h2>Ready to go viral?</h2>
+          <p>Join 10,000+ creators using VIRLBOX to grow their audience.</p>
           <div className="vb-cta-actions">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="vb-input"
-            />
-            <button className="vb-btn-white vb-btn-lg">Get Started Free</button>
+            <button className="vb-btn-primary vb-btn-lg" onClick={() => navigate("/register")}>
+              Start Free Trial
+            </button>
+            <button className="vb-btn-outline vb-btn-lg">
+              Watch Demo
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Footer - Reorganized */}
+      {/* Footer - Reorganized with Legal & Contact Hierarchy */}
       <footer className="vb-footer">
         <div className="vb-footer-inner">
-          <div className="vb-footer-top">
+          {/* Main Footer Grid */}
+          <div className="vb-footer-main">
             <div className="vb-footer-brand">
               <Link to="/" className="vb-logo">
                 <img src="/assets/IMG_3777.jpg" alt="VIRLBOX" />
                 <span>VIRLBOX</span>
               </Link>
               <p>AI-powered content creation for the modern creator.</p>
+              <div className="vb-footer-social">
+                <a href="#" aria-label="Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+                <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/></svg></a>
+                <a href="#" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+                <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+              </div>
             </div>
 
-            <div className="vb-footer-grid">
+            <div className="vb-footer-links">
               <div className="vb-footer-col">
                 <h4>Product</h4>
                 <Link to="/#features">Features</Link>
@@ -381,63 +612,63 @@ const LandingPage = () => {
                 <Link to="/#platform">Platform</Link>
                 <Link to="/integrations">Integrations</Link>
                 <Link to="/api">API</Link>
+                <Link to="/changelog">What's New</Link>
               </div>
               <div className="vb-footer-col">
                 <h4>Resources</h4>
                 <Link to="/blog">Blog</Link>
                 <Link to="/tutorials">Tutorials</Link>
+                <Link to="/guides">Creator Guides</Link>
+                <Link to="/templates">Templates</Link>
                 <Link to="/help">Help Center</Link>
                 <Link to="/community">Community</Link>
-                <Link to="/status">Status</Link>
               </div>
               <div className="vb-footer-col">
                 <h4>Company</h4>
-                <Link to="/about">About</Link>
+                <Link to="/about">About Us</Link>
                 <Link to="/careers">Careers</Link>
-                <Link to="/press">Press</Link>
-                <Link to="/contact">Contact</Link>
-              </div>
-              <div className="vb-footer-col">
-                <h4>Legal</h4>
-                <Link to="/privacy">Privacy</Link>
-                <Link to="/terms">Terms</Link>
-                <Link to="/security">Security</Link>
-                <Link to="/cookies">Cookies</Link>
+                <Link to="/press">Press Kit</Link>
+                <Link to="/partners">Partners</Link>
+                <Link to="/customers">Customers</Link>
               </div>
             </div>
           </div>
 
-          <div className="vb-footer-bottom">
-            <p>© 2025 VIRLBOX. All rights reserved.</p>
-            <div className="vb-footer-social">
-              <a href="#" aria-label="Twitter">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-              </a>
-              <a href="#" aria-label="Instagram">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="2" y="2" width="20" height="20" rx="5"/>
-                  <circle cx="12" cy="12" r="4"/>
-                  <circle cx="18" cy="6" r="1"/>
-                </svg>
-              </a>
-              <a href="#" aria-label="YouTube">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-              </a>
-              <a href="#" aria-label="TikTok">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                </svg>
-              </a>
-              <a href="#" aria-label="Discord">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                </svg>
-              </a>
+          {/* Contact Section */}
+          <div className="vb-footer-contact">
+            <div className="vb-contact-item">
+              <h4>Sales</h4>
+              <a href="mailto:sales@virlbox.com">sales@virlbox.com</a>
+              <a href="tel:+442012345678">+44 20 1234 5678</a>
             </div>
+            <div className="vb-contact-item">
+              <h4>Support</h4>
+              <a href="mailto:support@virlbox.com">support@virlbox.com</a>
+              <Link to="/help">Help Center</Link>
+            </div>
+            <div className="vb-contact-item">
+              <h4>Press</h4>
+              <a href="mailto:press@virlbox.com">press@virlbox.com</a>
+              <Link to="/press">Media Kit</Link>
+            </div>
+          </div>
+
+          {/* Legal Section */}
+          <div className="vb-footer-legal">
+            <div className="vb-legal-links">
+              <Link to="/privacy">Privacy Policy</Link>
+              <span className="vb-divider">·</span>
+              <Link to="/terms">Terms of Service</Link>
+              <span className="vb-divider">·</span>
+              <Link to="/cookies">Cookie Policy</Link>
+              <span className="vb-divider">·</span>
+              <Link to="/security">Security</Link>
+              <span className="vb-divider">·</span>
+              <Link to="/gdpr">GDPR</Link>
+              <span className="vb-divider">·</span>
+              <Link to="/accessibility">Accessibility</Link>
+            </div>
+            <p className="vb-copyright">© 2025 VIRLBOX Ltd. All rights reserved. Registered in England & Wales.</p>
           </div>
         </div>
       </footer>
