@@ -2,18 +2,109 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(circle at top, #1e293b 0, #020617 60%);
-  color: #e5e7eb;
 }
 
-.page-landing .hero {
-  flex: 1;
-  display: flex;
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 3rem;
   align-items: center;
+}
+
+.hero-copy h1 {
+  font-size: clamp(2.5rem, 4vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.1rem 0 0.75rem;
+}
+
+.hero-copy p {
+  max-width: 32rem;
+  margin: 0.25rem 0 1.4rem;
+  color: #9ca3af;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.hero-secondary {
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  cursor: pointer;
+}
+
+.hero-secondary:hover {
+  border-color: rgba(148, 163, 184, 0.7);
+}
+
+.hero-footnote {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.hero-footnote code {
+  background: rgba(15, 23, 42, 0.9);
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+}
+
+/* Right-side visual */
+
+.hero-visual {
+  position: relative;
+  display: flex;
   justify-content: center;
 }
-.page-landing .hero h1 {
-  font-size: 3rem;
-  text-align: center;
-  margin: 0 1rem;
+
+.hero-image-frame {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: radial-gradient(circle at top, #0f172a 0, #020617 60%);
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
+}
+
+.hero-image-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hero-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(36px);
+  opacity: 0.65;
+}
+
+.hero-glow-1 {
+  width: 140px;
+  height: 140px;
+  background: #38bdf8;
+  top: -30px;
+  left: 10%;
+}
+
+.hero-glow-2 {
+  width: 180px;
+  height: 180px;
+  background: #6366f1;
+  bottom: -45px;
+  right: -10px;
+}
+.hero-glow-3 {
+  width: 100px;
+  height: 100px;
+  background: #ec4899;
+  top: 20%;
+  right: 15%;
 }
