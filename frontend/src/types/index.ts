@@ -1,48 +1,29 @@
 export interface User {
-  id: number;
-  name: string;
+  id: string;
   email: string;
-  role: 'admin' | 'user';
+  name: string;
+}
+
+export interface Content {
+  id: string;
+  title: string;
+  content: string;
+  platform: string;
+  status: 'draft' | 'published' | 'scheduled';
   createdAt: string;
 }
 
-export interface VirtualMachine {
-  id: number;
-  name: string;
-  status: 'running' | 'stopped' | 'paused';
-  cpu: number;
-  memory: number;
-  disk: number;
-  owner: User;
-  createdAt: string;
+export interface Analytics {
+  userId: string;
+  totalFollowers: number;
+  avgEngagement: number;
+  growthRate: number;
+  topContent: string[];
 }
 
-export interface Dashboard {
-  totalVMs: number;
-  activeVMs: number;
-  cpuUsage: number;
-  memoryUsage: number;
-}
-
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  message?: string;
-  error?: string;
-}
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface RegisterRequest {
-  name: string;
-  email: string;
-  password: string;
-}
-
-export interface AuthResponse {
-  token: string;
-  user: User;
+export interface Integration {
+  id: string;
+  type: string;
+  platform: string;
+  isActive: boolean;
 }
