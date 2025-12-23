@@ -1242,3 +1242,60 @@ html {
 ::-webkit-selection {
   background: rgba(99, 102, 241, 0.2);  
 }
+.vb-carousel-block {
+  max-width: var(--vb-container-lg);
+  margin: 0 auto;
+  padding: 0 var(--vb-space-xl);
+}
+
+.vb-carousel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.vb-carousel-head h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.vb-carousel-head p {
+  color: var(--vb-text-tertiary);
+  font-size: 14px;
+}
+
+.vb-video-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.vb-video-pill {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--vb-border);
+  padding: 6px 10px;
+  border-radius: var(--vb-radius-full);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.vb-video-why {
+  margin-top: 8px;
+  color: var(--vb-text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.vb-link-cta {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vb-primary);
+}
