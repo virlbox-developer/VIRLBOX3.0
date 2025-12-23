@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../stores/auth';
 
-export const Home: React.FC = () => {
+const Home: React.FC = () => {
   const { user } = useAuthStore();
 
   return (
@@ -28,3 +28,5 @@ export const Home: React.FC = () => {
     </div>
   );
 };
+
+export default Home;
