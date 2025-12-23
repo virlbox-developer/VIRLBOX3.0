@@ -1,0 +1,22 @@
+.page-dashboard {
+  min-height: 100vh;
+  display: flex;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+.page-dashboard .sidebar {
+  width: 260px;
+  background: #020617;
+  border-right: 1px solid #1f2937;
+}
+
+.page-dashboard .content {
+  flex: 1;
+  padding: 1.5rem;
+}
+.page-dashboard .header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}

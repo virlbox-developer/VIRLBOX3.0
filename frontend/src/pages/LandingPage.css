@@ -1,0 +1,19 @@
+.page-landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top, #1e293b 0, #020617 60%);
+  color: #e5e7eb;
+}
+
+.page-landing .hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page-landing .hero h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin: 0 1rem;
+}

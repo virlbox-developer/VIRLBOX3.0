@@ -1,0 +1,243 @@
+PS C:\Users\Master\Desktop\virlbox> cd .\frontend\
+PS C:\Users\Master\Desktop\virlbox\frontend> npm run dev
+
+> virlbox-frontend@2.0.0 dev
+> vite
+
+▲ [WARNING] Duplicate key "resolveJsonModule" in object literal [duplicate-object-key]
+
+    tsconfig.json:26:4:
+      26 │     "resolveJsonModule": true,
+         ╵     ~~~~~~~~~~~~~~~~~~~
+
+  The original key "resolveJsonModule" is here:
+
+    tsconfig.json:20:4:
+      20 │     "resolveJsonModule": true,
+         ╵     ~~~~~~~~~~~~~~~~~~~
+
+
+  VITE v7.3.0  ready in 229 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+19:28:05 [vite] Internal server error: Failed to resolve import "./Login.css" from "src/pages/Login.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Login.tsx:3:7
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./Login.css";
+     |          ^
+  22 |  const Login = () => {
+  23 |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28998:43)
+      at TransformPluginContext.error (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28995:14)
+      at normalizeUrl (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27118:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27176:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27144:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28796:14)
+      at async loadAndTransform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:22669:26)
+19:28:05 [vite] (client) Pre-transform error: Failed to resolve import "./Login.css" from "src/pages/Login.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Login.tsx:3:7
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./Login.css";
+     |          ^
+  22 |  const Login = () => {
+  23 |    _s();
+19:28:06 [vite] Internal server error: Failed to resolve import "../stores/auth" from "src/pages/Home.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Home.tsx:3:29
+  18 |  var _s = $RefreshSig$();
+  19 |  import { Link } from "react-router-dom";
+  20 |  import { useAuthStore } from "../stores/auth";
+     |                                ^
+  21 |  export const Home = () => {
+  22 |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28998:43)
+      at TransformPluginContext.error (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28995:14)
+      at normalizeUrl (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27118:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27176:32
+      at async Promise.all (index 4)
+      at async TransformPluginContext.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27144:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28796:14)
+      at async loadAndTransform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:22669:26)
+19:28:06 [vite] Internal server error: Failed to resolve import "../stores/auth" from "src/pages/Register.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Register.tsx:3:29
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import { useAuthStore } from "../stores/auth";
+     |                                ^
+  22 |  export const Register = () => {
+  23 |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28998:43)
+      at TransformPluginContext.error (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28995:14)
+      at normalizeUrl (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27118:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27176:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27144:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28796:14)
+      at async loadAndTransform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:22669:26)
+19:28:06 [vite] Internal server error: Failed to resolve import "./LandingPage.css" from "src/pages/LandingPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/LandingPage.tsx:3:7
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./LandingPage.css";
+     |          ^
+  22 |  const LandingPage = () => {
+  23 |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28998:43)
+      at TransformPluginContext.error (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28995:14)
+      at normalizeUrl (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27118:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27176:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27144:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28796:14)
+      at async loadAndTransform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:22669:26)
+19:28:06 [vite] (client) Pre-transform error: Failed to resolve import "../stores/auth" from "src/pages/Home.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Home.tsx:3:29
+  18 |  var _s = $RefreshSig$();
+  19 |  import { Link } from "react-router-dom";
+  20 |  import { useAuthStore } from "../stores/auth";
+     |                                ^
+  21 |  export const Home = () => {
+  22 |    _s();
+19:28:06 [vite] (client) Pre-transform error: Failed to resolve import "../stores/auth" from "src/pages/Register.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Register.tsx:3:29
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import { useAuthStore } from "../stores/auth";
+     |                                ^
+  22 |  export const Register = () => {
+  23 |    _s();
+19:28:06 [vite] (client) Pre-transform error: Failed to resolve import "./LandingPage.css" from "src/pages/LandingPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/LandingPage.tsx:3:7
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./LandingPage.css";
+     |          ^
+  22 |  const LandingPage = () => {
+  23 |    _s();
+19:28:06 [vite] Internal server error: Failed to resolve import "./Dashboard.css" from "src/pages/Dashboard.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Dashboard.tsx:3:7
+  19 |  import { useState, useEffect } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./Dashboard.css";
+     |          ^
+  22 |  const Dashboard = () => {
+  23 |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28998:43)
+      at TransformPluginContext.error (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28995:14)
+      at normalizeUrl (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27118:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27176:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27144:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28796:14)
+      at async loadAndTransform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:22669:26)
+19:28:06 [vite] Internal server error: Failed to resolve import "./Index.css" from "src/pages/Admin.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Admin.tsx:3:7
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./Index.css";
+     |          ^
+  22 |  import "./Admin.css";
+  23 |  const Admin = () => {
+      at TransformPluginContext._formatLog (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28998:43)
+      at TransformPluginContext.error (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28995:14)
+      at normalizeUrl (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27118:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27176:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27144:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28796:14)
+      at async loadAndTransform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:22669:26)
+19:28:06 [vite] (client) Pre-transform error: Failed to resolve import "./Dashboard.css" from "src/pages/Dashboard.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Dashboard.tsx:3:7
+  19 |  import { useState, useEffect } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./Dashboard.css";
+     |          ^
+  22 |  const Dashboard = () => {
+  23 |    _s();
+19:28:06 [vite] (client) Pre-transform error: Failed to resolve import "./Index.css" from "src/pages/Admin.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Admin.tsx:3:7
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./Index.css";
+     |          ^
+  22 |  import "./Admin.css";
+  23 |  const Admin = () => {
+19:28:06 [vite] Internal server error: Failed to resolve import "./LandingPage.css" from "src/pages/LandingPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/LandingPage.tsx:3:7
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./LandingPage.css";
+     |          ^
+  22 |  const LandingPage = () => {
+  23 |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28998:43)
+      at TransformPluginContext.error (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28995:14)
+      at normalizeUrl (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27118:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27176:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27144:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28796:14)
+      at async loadAndTransform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:22669:26)
+      at async viteTransformMiddleware (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:24541:20)
+19:28:06 [vite] Internal server error: Failed to resolve import "./Dashboard.css" from "src/pages/Dashboard.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Dashboard.tsx:3:7
+  19 |  import { useState, useEffect } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./Dashboard.css";
+     |          ^
+  22 |  const Dashboard = () => {
+  23 |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28998:43)
+      at TransformPluginContext.error (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28995:14)
+      at normalizeUrl (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27118:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27176:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27144:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28796:14)
+      at async loadAndTransform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:22669:26)
+      at async viteTransformMiddleware (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:24541:20)
+19:28:06 [vite] Internal server error: Failed to resolve import "./Index.css" from "src/pages/Admin.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Master/Desktop/virlbox/frontend/src/pages/Admin.tsx:3:7
+  19 |  import { useState } from "react";
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import "./Index.css";
+     |          ^
+  22 |  import "./Admin.css";
+  23 |  const Admin = () => {
+      at TransformPluginContext._formatLog (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28998:43)
+      at TransformPluginContext.error (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28995:14)
+      at normalizeUrl (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27118:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27176:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:27144:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:28796:14)
+      at async loadAndTransform (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:22669:26)
+      at async viteTransformMiddleware (file:///C:/Users/Master/Desktop/virlbox/frontend/node_modules/vite/dist/node/chunks/config.js:24541:20)
