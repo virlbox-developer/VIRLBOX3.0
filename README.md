@@ -97,9 +97,9 @@ cd frontend && npm install && npm run build
 
 ## 📄 License
 
-©2025, XBlock Technology Limited. All rights reserved.
-Website: https://xblockalgo.co.uk
-Email: info@xblockalgo.co.uk
+- ©2025, XBlock Technology Limited. All rights reserved.
+- Website: https://xblockalgo.co.uk
+- Email: info@xblockalgo.co.uk
 ---
 
 **Status:** ✅ Production Ready  
