@@ -85,7 +85,7 @@ cd frontend && npm install && npm run build
 
 ## 📖 Learn More
 
-1. Read START-HERE.md for complete overview
+1. Read START-HERE.md for a complete overview
 2. Follow VIRLBOX-Quick-Start.md for deployment
 3. Review VIRLBOX-Technical-Reference.md for architecture
 
@@ -97,8 +97,9 @@ cd frontend && npm install && npm run build
 
 ## 📄 License
 
-MIT - Free to use and modify
-
+©2025, XBlock Technology Limited. All rights reserved.
+Website: https://xblockalgo.co.uk
+Email: info@xblockalgo.co.uk
 ---
 
 **Status:** ✅ Production Ready  
