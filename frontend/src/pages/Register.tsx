@@ -12,7 +12,7 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await register(email, password, name);
+      await register({ email, password });
       navigate('/dashboard');
     } catch (err) {
       console.error(err);
