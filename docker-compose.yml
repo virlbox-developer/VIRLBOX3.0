@@ -1,64 +1,84 @@
-version: "3.8"
+version: '3.8'
 
 services:
   postgres:
     image: postgres:15-alpine
+    container_name: virlbox-postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: virlbox
+      POSTGRES_USER: virlbox
+      POSTGRES_PASSWORD: virlbox_password
+      POSTGRES_DB: virlbox_db
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U virlbox"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - virlbox
 
   redis:
     image: redis:7-alpine
+    container_name: virlbox-redis
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - virlbox
 
   backend:
     build: ./backend
-    ports:
-      - "3000:3000"
+    container_name: virlbox-backend
     environment:
-      NODE_ENV: development
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/virlbox
+      DATABASE_URL: postgresql://virlbox:virlbox_password@postgres:5432/virlbox_db
       REDIS_URL: redis://redis:6379
-      JWT_SECRET: ${JWT_SECRET:-your-secret-key-here}
-      AYRSHARE_API_KEY: ${AYRSHARE_API_KEY:-your-key-here}
+      PORT: 5000
+      NODE_ENV: development
+      FRONTEND_URL: http://localhost:3000
+      JWT_SECRET: dev-secret-key
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      AYRSHARE_API_KEY: ${AYRSHARE_API_KEY:-}
+    ports:
+      - "5000:5000"
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
     volumes:
-      - ./backend/src:/app/src
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - virlbox
 
   frontend:
-    image: node:18-alpine
-    working_dir: /app
-    ports:
-      - "5173:5173"
+    build: ./frontend
+    container_name: virlbox-frontend
     environment:
-      VITE_API_URL: http://localhost:3000/api
+      REACT_APP_API_URL: http://localhost:5000/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    command: sh -c "npm install && npm run dev"
-    depends_on:
-      - backend
+    networks:
+      - virlbox
 
 volumes:
   postgres_data:
+  redis_data:
 
+networks:
+  virlbox:
+    driver: bridge

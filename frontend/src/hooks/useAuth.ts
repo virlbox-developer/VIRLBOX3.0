@@ -1,54 +1,35 @@
 import { useState, useEffect } from 'react';
+import { authService } from '../services/auth.service';
 
 interface User {
-  id: number;
-  name: string;
+  id: string;
   email: string;
-}
-
-interface AuthState {
-  user: User | null;
-  token: string | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
+  name?: string;
+  role?: string;
 }
 
 export const useAuth = () => {
-  const [authState, setAuthState] = useState<AuthState>({
-    user: null,
-    token: null,
-    isAuthenticated: false,
-    isLoading: true,
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    const checkAuth = async () => {
       try {
-        const user = JSON.parse(Buffer.from(token, 'base64').toString());
-        setAuthState({
-          user,
-          token,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      } catch {
-        setAuthState({ user: null, token: null, isAuthenticated: false, isLoading: false });
+        const token = localStorage.getItem('auth_token');
+        if (token) {
+          const currentUser = await authService.getMe();
+          setUser(currentUser);
+        }
+      } catch (error) {
+        localStorage.removeItem('auth_token');
+        setUser(null);
+      } finally {
+        setLoading(false);
       }
-    } else {
-      setAuthState({ user: null, token: null, isAuthenticated: false, isLoading: false });
-    }
+    };
+
+    checkAuth();
   }, []);
 
-  const login = (token: string, user: User) => {
-    localStorage.setItem('token', token);
-    setAuthState({ user, token, isAuthenticated: true, isLoading: false });
-  };
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    setAuthState({ user: null, token: null, isAuthenticated: false, isLoading: false });
-  };
-
-  return { ...authState, login, logout };
+  return { user, loading };
 };

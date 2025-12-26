@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authService } from '../services/auth.service';
 import './Login.css';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [isRegister, setIsRegister] = useState(false);
+  const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,24 +18,14 @@ const Login: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.message || 'Login failed');
-        return;
+      if (isRegister) {
+        await authService.register(email, name, password);
+      } else {
+        await authService.login(email, password);
       }
-
-      localStorage.setItem('token', data.token);
       navigate('/dashboard');
-    } catch (err) {
-      setError('Network error. Please try again.');
-      console.error(err);
+    } catch (err: any) {
+      setError(err.message || 'Authentication failed');
     } finally {
       setLoading(false);
     }
@@ -40,38 +33,61 @@ const Login: React.FC = () => {
 
   return (
     <div className="login-container">
-      <h1>Login</h1>
-      {error && <div className="login-error">{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="login-form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="login-input"
-            placeholder="Enter your email"
-          />
-        </div>
-        <div className="login-form-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="login-input"
-            placeholder="Enter your password"
-          />
-        </div>
-        <button type="submit" disabled={loading} className="login-button">
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
-      <p className="login-footer">
-        Don't have an account? <a href="/register">Register</a>
-      </p>
+      <div className="login-box">
+        <h1>VIRLBOX</h1>
+        <p>AI-Powered Content Creation Platform</p>
+
+        {error && <div className="error-message">{error}</div>}
+
+        <form onSubmit={handleSubmit}>
+          {isRegister && (
+            <div className="form-group">
+              <label>Name</label>
+              <input
+                type="text"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+              />
+            </div>
+          )}
+
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" className="btn btn--primary" disabled={loading}>
+            {loading ? 'Loading...' : isRegister ? 'Register' : 'Login'}
+          </button>
+        </form>
+
+        <p className="toggle-auth">
+          {isRegister ? 'Already have an account?' : "Don't have an account?"}
+          <button
+            type="button"
+            onClick={() => setIsRegister(!isRegister)}
+            className="link-btn"
+          >
+            {isRegister ? 'Login' : 'Register'}
+          </button>
+        </p>
+      </div>
     </div>
   );
 };
